@@ -24,6 +24,7 @@ Template Name: Home Custom Page
         n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch")
       }(window, document);
     </script>
+    <link rel="preload" href="https://pishka.shop/wp-content/uploads/2024/05/geek_cultural.png" as="image">
     <?php wp_head(); ?>
   </head>
   <body class="body vsc-initialized" cz-shortcut-listen="true" <?php body_class(); ?>>

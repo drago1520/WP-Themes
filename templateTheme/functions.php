@@ -1,7 +1,7 @@
 <?php
 
 function wpdevs_load_scripts(){
-    wp_enqueue_style( 'wpdevs-style', get_stylesheet_uri(), array(), filemtime( get_template_directory() . '/style.css' ), 'all' ); 
+    wp_enqueue_style( 'wpdevs-style', get_stylesheet_uri(), array(), 'all' ); 
     wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap', array(), null );
     //wp_enqueue_style( 'awge-css', 'https://uploads-ssl.webflow.com/5ea6f1f7c09557e8d9baba5a/css/awge-unofficial.webflow.77c4e57ab.min.css', array(), null );
     
