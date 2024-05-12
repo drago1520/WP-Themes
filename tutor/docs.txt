@@ -1,0 +1,99 @@
+Добри практики:
+- Започваш със html скелет. Виж как от първите уроци!
+-Слагай името на темата пред всяко възможно име
+-Функция, която enquene ВСИЧКИ scripts & css.
+- <?php wp_head()?> последно в <head> </head> = Зарежда enquene! 
+- Има два начина за правене на уникална страница "page-<slug>.php", но той е non-reusable
+- Template + Page
+- slug при template зависи от името на Template-a.
+- Template Hiearchy https://developer.wordpress.org/themes/basics/template-hierarchy/#single-page https://i0.wp.com/developer.wordpress.org/files/2014/10/Screenshot-2019-01-23-00.20.04.png?ssl=1
+- Theme support code generator https://generatewp.com/theme-support/
+- Не уразмерявай със css, а с html: the_post_thumbnail( array(100,100) ); nails
+- Не ползвай query_posts() за custom loop
+- записвай аргументите с $args
+- Никога не забравяй wp_reset_postadata() в края на new WP_QUERY();
+- index.php само за лист на постове от блога!
+- копирай comments.php от WP theme 2016
+- добави generic wordpress css https://developer.wordpress.org/advanced-administration/wordpress/css/#:~:text=set%20from%20scratch.-,WordPress%20Generated%20Classes,be%20styled%20differently%20if%20needed.
+
+
+
+Терминология:
+- "Enquene" = зарежда едно след друго. Когато ползвам f() за enquene, тя вика куката и ги зарежда. 
+- "Handle" = id = short name = "slug"
+- "Template tags" - f() to retrieve from database.
+- f() с get_... трябва "echo"
+- "page templates" - page-<slug>.php
+- "Theme customizer" 
+- "register" --> call f() in the functions.php
+- add_theme_support() СУПЕР ВАЖНА!!!
+- widget == sidebar == едни и същи динамични елементи на всички страници
+- sidebar.php - притежава всички widgets
+- "shortname" е след тирето, например page-starter.php --> "starter" е shortname
+- custom query loop
+- category id --> hover mouse over an category in admin "categories"
+- WP_QUERY class = custom loop с мои аргументи
+- search.php (template file for search results)
+- трябва да имам мой searchform.php (копирай от курса)
+- по какво да търси в searchform.php hardcoded
+- custom post types (CPT)
+- post pagination
+- page break
+- archive (author, category, date)
+- theme support (допълнителни фукциики)
+- the_widget() !!! Например мога 
+- get_template_part() = require()
+- NB "conditional tags" https://developer.wordpress.org/themes/basics/conditional-tags/
+- "WP Customizer" https://developer.wordpress.org/themes/customize-api/customizer-objects/
+
+Код:
+- wp_enqueue_style('някво име = handle за зареждане на f() = id', 'път до css-а', 'масив с .css фhandles, които да зареди първо', 'версия на enquene', 'all');
+- add_action('hook', 'моя функция');
+- wp_enqueue_script( 'script-name', 'https://website-domain.com', array(''), null, true); преди </body>
+- "The Loop":
+            !!!ВИНАГИ СЛЕД get_header();
+            <?php
+            // get_header(); 
+            if ( have_posts() ) :
+                while ( have_posts() ) : the_post();
+                    // Display post content
+                endwhile;
+            endif;
+            ?>
+
+- the_post_thumbnail( array(100,100) );
+- the_custom_logo();
+- dynamic_sidebar("<id of sitebar"); - призовава widget с id в sidebar.php файла
+- get_sidebar('<short name>') - призовава sidebar.php в index.php
+- register_sidebar() във functions.php
+- $args = array(
+                                'post_type' => 'post',
+                                'posts_per_page' => 5,
+                                'category__in'  => array( 9, 10, 15 ),
+                                'category__not_in' => array( 1 )
+                            );
+
+                            $postlist = new WP_Query( $args );
+
+                                if( $postlist->have_posts() ):
+                                    while( $postlist->have_posts() ) : $postlist->the_post();
+                                    endwhile;
+                                    wp_reset_postdata();
+                                else: 
+                                wp_reset_postdata();?>
+                                    <p>Nothing yet to be displayed!</p>
+                            <?php endif; ?>  
+- <?php 
+        /*
+            Template Name: Test Template
+        */
+    ?>
+- echo get_search_query()
+- the_posts_pagination( );
+- next_post_link(); previous_post_link() в Loop, за да покаже на САМИЯТ ПОСТ следващия/ предишния пост.
+- archive.php се ползва за категории, дата и автор. има и date.php author.php etc... 
+- the_archive_title( '<h1 class="archive-title">', '</h1>' );
+- add_theme_support('title-tag'); - показва доп. инфо от страницата в tab-a.
+- the_widget()
+- get_template_part("<uri without .php>")
+- wp_body_open(); точно след <body>, за да можеш да слагащ hook.
